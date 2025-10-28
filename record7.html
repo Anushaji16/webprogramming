@@ -1,26 +1,44 @@
 <html>
-<head>
-<title> css </title>
+<body bgcolor="yellow">
+<center><h1>Math and String Function</h2></center>
 
-<style>
-        body
-        {
-        background-color:PLUM;
-        }
-        
-        h1 {
-           color:blue;
-           text-align:center;
-           }
-          p {
-            color:brown;
-            font-size:18px;
-</style>
-</head>
-<link rel="stylesheet" href="style.css">
-<body>
-<h1> this is internal css </h2>
-<h2 style="color:142904 ">inline function </h1>
-<p class=external>this is external css.,<br> css,which stands for cascading style sheets,is a style sheet language used in web development to describe the presentation and formatting of a document written in a markup language like HTML.</p>
+<h2><u>Math Functions</u></h2>
+
+<p>Squre Root of 17 is:<span id="root"></span></p>
+<p>random number of:<span id="random"></span></p>
+<p>power of number:<span id="power"></span></p>
+<p>floor of number:<span id="floor"></span></p>
+<p>ceil of number:<span id="ceil"></span></p>
+<p>round of number:<span id="round"></span></p>
+<script>
+document.getElementById("root").innerHTML=Math.sqrt(17);
+document.getElementById("random").innerHTML=Math.random();
+document.getElementById("power").innerHTML=Math.pow(4,3);
+document.getElementById("floor").innerHTML=Math.floor(5.3);
+document.getElementById("ceil").innerHTML=Math.ceil(6.4);
+document.getElementById("round").innerHTML=Math.round(3.4);
+</script>
+
+<br><br>
+
+<h2><u>String Functions</u></h2>
+<script>
+var str1="she is  ";
+var str2="a gold";
+var str3=str1.concat(str2);
+var n=str1.indexOf("a");
+var str4=str2.toLowerCase();
+var str5=str1.toUpperCase();
+var str6=str2.slice(2,5);
+
+document.write("<p>String one = "+str1+"</p>");
+document.write("<p>String two = "+str2+"</p>");
+document.write("<p>fifth character in the second string : "+str2.charAt(5)+"</p>");
+document.write("<p>Concatnating string 1&2 : "+str3+"</p>");
+document.write("<p>String2  to lower case : "+str4+"</p>");
+document.write("<p>String1 to upper case : "+str5+"</p>");
+document.write("<p>Slicing string 2 : "+str6+"</p>");
+document.write("<p>Index of (a) in string1 : "+n+"</p>");
+</script>
 </body>
-</html>            
+</html>
