@@ -1,0 +1,215 @@
+<html>
+<head>
+<title>ONLINE EXAM</title>
+<style>
+body{
+ font-family: Arial, sans-serif;
+ margin: 20px;
+ background-color:white;
+}
+.timer{
+ font-size: 20px;
+ font-weight: bold;
+}
+.question{
+ margin-bottom: 20px;
+ display: none;
+}
+.btn{
+ padding: 10px 20px;
+ background-color: blue;
+ color: white;
+ border: none;
+ cursor: pointer;
+ margin: 8px;
+}
+.resultbox{
+ text-align:center;
+ margin-top:40px;
+ display:none;
+}
+</style>
+</head>
+<body>
+<center><h1>ONLINE EXAMINATION</h1></center>
+<div class="timer" id="timer">Time left: 1:00</div>
+<form id="examform">
+
+<div class="question">
+<h3>Q1: What gas do plants release after photosynthesis?</h3>
+<input type="radio" name="q1" value="carbondioxide"> Carbon dioxide<br>
+<input type="radio" name="q1" value="nitrogen"> Nitrogen<br>
+<input type="radio" name="q1" value="hydrogen"> Hydrogen<br>
+<input type="radio" name="q1" value="oxygen"> Oxygen<br>
+</div>
+
+<div class="question">
+<h3>Q2: Who wrote the national anthem of India?</h3>
+<input type="radio" name="q2" value="mahatmagandhi"> Mahatma Gandhi<br>
+<input type="radio" name="q2" value="bankimchandrachatterjee"> Bankim Chandra Chatterjee<br>
+<input type="radio" name="q2" value="rabindranathtagore"> Rabindranath Tagore<br>
+<input type="radio" name="q2" value="jawaharlalnehru"> Jawaharlal Nehru<br>
+</div>
+
+<div class="question">
+<h3>Q3: What is H₂O commonly known as?</h3>
+<input type="radio" name="q3" value="salt"> Salt<br>
+<input type="radio" name="q3" value="water"> Water<br>
+<input type="radio" name="q3" value="sugar"> Sugar<br>
+<input type="radio" name="q3" value="air"> Air<br>
+</div>
+
+<div class="question">
+<h3>Q4: Which of the following is used to style a webpage?</h3>
+<input type="radio" name="q4" value="html"> HTML<br>
+<input type="radio" name="q4" value="javascript"> JavaScript<br>
+<input type="radio" name="q4" value="css"> CSS<br>
+<input type="radio" name="q4" value="php"> PHP<br>
+</div>
+
+<div class="question">
+<h3>Q5: In HTML, the &lt;br&gt; tag is used for?</h3>
+<input type="radio" name="q5" value="exit"> Exit<br>
+<input type="radio" name="q5" value="break"> Break<br>
+<input type="radio" name="q5" value="boldline"> Bold line<br>
+<input type="radio" name="q5" value="background"> Background<br>
+</div>
+
+<div class="question">
+<h3>Q6: Who is known as the father of computers?</h3>
+<input type="radio" name="q6" value="issacnewton"> Isaac Newton<br>
+<input type="radio" name="q6" value="charlesbabbage"> Charles Babbage<br>
+<input type="radio" name="q6" value="alberteinstein"> Albert Einstein<br>
+<input type="radio" name="q6" value="thomasedison"> Thomas Edison<br>
+</div>
+
+<div class="question">
+<h3>Q7: What is the capital of Australia?</h3>
+<input type="radio" name="q7" value="sydney"> Sydney<br>
+<input type="radio" name="q7" value="colombia"> Colombia<br>
+<input type="radio" name="q7" value="canberra"> Canberra<br>
+<input type="radio" name="q7" value="brisbane"> Brisbane<br>
+</div>
+
+<div class="question">
+<h3>Q8: Who invented the telephone?</h3>
+<input type="radio" name="q8" value="alexandergrahambell"> Alexander Graham Bell<br>
+<input type="radio" name="q8" value="galileo"> Galileo<br>
+<input type="radio" name="q8" value="charlesbabbage"> Charles Babbage<br>
+<input type="radio" name="q8" value="thomasedison"> Thomas Edison<br>
+</div>
+
+<div class="question">
+<h3>Q9: Which festival is known as the Festival of Lights?</h3>
+<input type="radio" name="q9" value="diwali"> Diwali<br>
+<input type="radio" name="q9" value="holi"> Holi<br>
+<input type="radio" name="q9" value="christmas"> Christmas<br>
+<input type="radio" name="q9" value="eid"> Eid<br>
+</div>
+
+<div class="question">
+<h3>Q10: What is the largest planet in our solar system?</h3>
+<input type="radio" name="q10" value="364"> Earth<br>
+<input type="radio" name="q10" value="365"> Mars<br>
+<input type="radio" name="q10" value="366"> Jupiter<br>
+<input type="radio" name="q10" value="367"> Saturn<br>
+</div>
+
+<center>
+<button type="button" id="prevBtn" class="btn" onclick="prevQ()">PREVIOUS</button>
+<button type="button" id="nextBtn" class="btn" onclick="nextQ()">NEXT</button>
+<button type="button" id="submitBtn" class="btn" onclick="SubmitExam()" style="display:none;">SUBMIT</button>
+</center>
+
+</form>
+
+<div id="resultBox" class="resultbox">
+    <h2>Exam Finished</h2>
+    <h3 id="showscore"></h3>
+    <h3 id="showendtime"></h3>
+</div>
+
+<script>
+let timer = 60;
+const timerElement = document.getElementById("timer");
+
+const interval = setInterval(() => {
+  const minutes = Math.floor(timer / 60);
+  const seconds = timer % 60;
+  timerElement.textContent = `Time left: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  timer--;
+
+  if (timer < 0) {
+    clearInterval(interval);
+    SubmitExam();
+  }
+}, 1000);
+
+let currentIndex = 0;
+const questions = document.querySelectorAll(".question");
+
+function showQuestion(index){
+  questions.forEach(q => q.style.display = "none");
+  questions[index].style.display = "block";
+
+  document.getElementById("prevBtn").style.display = index === 0 ? "none" : "inline-block";
+  document.getElementById("nextBtn").style.display = index === questions.length-1 ? "none" : "inline-block";
+  document.getElementById("submitBtn").style.display = index === questions.length-1 ? "inline-block" : "none";
+}
+
+showQuestion(currentIndex);
+
+function nextQ(){
+  if(currentIndex < questions.length-1){
+    currentIndex++;
+    showQuestion(currentIndex);
+  }
+}
+
+function prevQ(){
+  if(currentIndex > 0){
+    currentIndex--;
+    showQuestion(currentIndex);
+  }
+}
+
+function SubmitExam() {
+  clearInterval(interval);
+
+  const answers = {
+    q1: "oxygen",
+    q2: "rabindranathtagore",
+    q3: "water",
+    q4: "css",
+    q5: "break",
+    q6: "charlesbabbage",
+    q7: "canberra",
+    q8: "alexandergrahambell",
+    q9: "diwali",
+    q10: "jupiter",
+    
+  };
+
+  let score = 0;
+  const form = document.getElementById("examform");
+    for (let q in answers) {
+    const selected = form[q].value;
+    if (selected === answers[q]) {
+      score++;
+    }
+  }
+
+  document.getElementById("examform").style.display = "none";
+  document.getElementById("timer").style.display = "none";
+  document.getElementById("resultBox").style.display = "block";
+  document.getElementById("showscore").textContent = "Your Score: " + score + "/10";
+
+  const now = new Date();
+  const endTime = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+  document.getElementById("showendtime").textContent = "Exam Finished At: " + endTime;
+}
+</script>
+
+</body>
+</html>
+
